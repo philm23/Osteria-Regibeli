@@ -56,7 +56,7 @@ body {
 }
 
 .hero-image {
-  background-image: url("img/banner-terra-mar.jpg"); /* substitui pela tua imagem */
+  background-image: url("img/banner-terra-mar.png"); /* substitui pela tua imagem */
   background-size: cover;
   background-position: center;
 }
@@ -171,13 +171,13 @@ body {
 
 /* Aqui colocas as tuas imagens reais */
 .img-camarao {
-  background-image: url("img/camarao.jpg");
+  background-image: url("img/camarao.png");
 }
 .img-carne {
-  background-image: url("img/carne.jpg");
+  background-image: url("img/carne.png");
 }
 .img-marisco {
-  background-image: url("img/marisco.jpg");
+  background-image: url("img/marisco.png");
 }
 .img-acompanhamentos {
   background-image: url("acompanhamentos.jpg");
