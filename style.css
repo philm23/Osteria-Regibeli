@@ -114,12 +114,12 @@ body {
 /* Secções gerais */
 
 .section {
-  padding: 4rem 8vw;
-  background: #ffffff;
+  background: #0d0d0d;
+  color: var(--text-light);
 }
 
 .section.light {
-  background: var(--bg-light);
+  background: #111;
 }
 
 .container {
@@ -128,8 +128,7 @@ body {
 }
 
 .section h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  color: var(--primary);
 }
 
 .section p {
