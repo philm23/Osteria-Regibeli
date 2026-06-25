@@ -23,42 +23,55 @@ body {
 
 /* Hero */
 
+/* ========================= */
+/* HERO VISUAL FORTE ESCURO */
+/* ========================= */
+
 .hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  min-height: 80vh;
-  background: var(--bg-dark);
-  color: var(--text-light);
+  position: relative;
+  min-height: 100vh;
+  background: url("img/banner-terra-mar.png") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75); /* overlay escuro */
+  backdrop-filter: blur(2px);
 }
 
 .hero-content {
-  padding: 4rem 8vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 1.5rem;
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  color: var(--text-light);
 }
 
-.hero h1 {
-  font-size: clamp(2.4rem, 4vw, 3.4rem);
-  margin: 0;
+.hero-title {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--text-light);
+  letter-spacing: -1px;
 }
 
-.hero p {
-  font-size: 1.05rem;
-  max-width: 36rem;
+.hero-slogan {
+  font-size: 1.4rem;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
 }
 
 .hero-buttons {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.hero-image {
-  background-image: url("img/banner-terra-mar.png"); /* substitui pela tua imagem */
-  background-size: cover;
-  background-position: center;
+  justify-content: center;
+  gap: 1.2rem;
 }
 
 /* Botões */
@@ -79,22 +92,24 @@ body {
 
 .btn.primary {
   background: var(--primary);
-  color: var(--text-light);
-}
-
-.btn.primary:hover {
-  background: #8f1a1a;
+  color: #000;
+  font-weight: 700;
+  padding: 1rem 2rem;
+  border-radius: 50px;
 }
 
 .btn.secondary {
   background: transparent;
-  color: var(--text-light);
-  border-color: var(--secondary);
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 1rem 2rem;
+  border-radius: 50px;
 }
 
 .btn.secondary:hover {
-  background: rgba(207, 161, 90, 0.15);
+  background: rgba(212, 162, 76, 0.15);
 }
+
 
 /* Secções gerais */
 
