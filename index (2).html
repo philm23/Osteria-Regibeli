@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa dos Petiscos – Terra e Mar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --navy: #0d1b2a; --gold: #c9a84c; --sand: #f5efe6; --white: #ffffff; }
+  html { scroll-behavior: smooth; }
+  body { background: #000; color: var(--white); font-family: 'Lato', sans-serif; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); text-decoration: none; }
+  .nav-links a { color: var(--sand); text-decoration: none; margin-left: 2rem; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8; transition: opacity 0.2s; }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+  #scroll-story { position: relative; height: 900vh; }
+  #sticky-wrap { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+
+  /* Two layered images — structure + prato photo */
+  .bg-layer {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center center;
+    transform-origin: center center;
+    will-change: transform, opacity;
+  }
+  #struct-img { z-index: 0; }
+  #prato-img  { z-index: 1; opacity: 0; transition: opacity 0.5s ease; }
+
+  #zoom-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0); z-index: 2; pointer-events: none;
+  }
+
+  #hero-text {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    z-index: 10; text-align: center; pointer-events: none; width: 90%;
+  }
+  #hero-text .eyebrow { font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  #hero-text h1 { font-family: 'Playfair Display', serif; font-size: clamp(3rem,7vw,6rem); font-weight: 900; line-height: 1.05; text-shadow: 0 2px 30px rgba(0,0,0,0.8); }
+  #hero-text h1 em { color: var(--gold); font-style: italic; }
+  #hero-text .slogan { margin-top: 1.2rem; font-family: 'Playfair Display', serif; font-size: clamp(1rem,2.2vw,1.5rem); font-style: italic; color: var(--sand); opacity: 0.9; text-shadow: 0 2px 20px rgba(0,0,0,0.9); }
+  #hero-text .slogan span { display: inline-block; border-top: 1px solid rgba(201,168,76,0.5); border-bottom: 1px solid rgba(201,168,76,0.5); padding: 0.4rem 1.5rem; margin-top: 0.5rem; }
+
+  #prato-panel {
+    position: absolute; bottom: 10%; left: 50%; transform: translateX(-50%);
+    z-index: 10; text-align: center; opacity: 0; pointer-events: none;
+    width: 90%; max-width: 600px;
+  }
+  #prato-panel .prato-icon { font-size: 3rem; display: block; margin-bottom: 0.5rem; }
+  #prato-panel .prato-tag { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  #prato-panel .prato-name { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem,5vw,4.5rem); font-weight: 900; line-height: 1.05; }
+  #prato-panel .prato-divider { width: 60px; height: 2px; background: var(--gold); margin: 0.8rem auto; }
+  #prato-panel .prato-desc { font-size: 1rem; font-weight: 300; color: var(--sand); opacity: 0.85; line-height: 1.7; }
+
+  #scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+    color: var(--sand); opacity: 0.6; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    animation: bounce 2s infinite;
+  }
+  #scroll-hint::after { content:''; display:block; width:1px; height:36px; background:var(--gold); margin-top:0.3rem; }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+  #progress {
+    position: fixed; right: 2rem; top: 50%; transform: translateY(-50%);
+    z-index: 200; display: flex; flex-direction: column; gap: 0.6rem;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.3); transition: background 0.3s, transform 0.3s; cursor: pointer; }
+  .dot.active { background: var(--gold); transform: scale(1.4); }
+
+  #video-section {
+    background: #000; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 5rem 2rem; text-align: center;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+  .video-eyebrow { font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .video-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem,4vw,3rem); font-weight: 900; margin-bottom: 2.5rem; }
+  .video-wrap {
+    width: 100%; max-width: 900px; aspect-ratio: 16/9;
+    background: #111; border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 4px; overflow: hidden;
+  }
+  .video-wrap video { width: 100%; height: 100%; object-fit: cover; }
+
+  #reserva {
+    min-height: 60vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 6rem 2rem; text-align: center;
+    background: var(--navy); border-top: 1px solid rgba(201,168,76,0.2);
+  }
+  .reserva-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem,4vw,3.5rem); margin-bottom: 1rem; }
+  .reserva-sub { color: var(--sand); opacity: 0.7; font-weight: 300; margin-bottom: 2.5rem; font-size: 1.05rem; }
+  .reserva-btn { padding: 1rem 3rem; background: var(--gold); color: var(--navy); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: background 0.2s; display: inline-block; }
+  .reserva-btn:hover { background: #e0bb5c; }
+  .footer-info { margin-top: 3rem; font-size: 0.8rem; color: var(--sand); opacity: 0.35; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #progress { right: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">Casa dos Petiscos</a>
+  <div class="nav-links">
+    <a href="#video-section">O Ritual</a>
+    <a href="#reserva">Reservar</a>
+  </div>
+</nav>
+
+<div id="progress">
+  <div class="dot active" data-index="0"></div>
+  <div class="dot" data-index="1"></div>
+  <div class="dot" data-index="2"></div>
+  <div class="dot" data-index="3"></div>
+  <div class="dot" data-index="4"></div>
+  <div class="dot" data-index="5"></div>
+  <div class="dot" data-index="6"></div>
+  <div class="dot" data-index="7"></div>
+</div>
+
+<div id="scroll-story">
+  <div id="sticky-wrap">
+    <!-- Structure always underneath -->
+    <img id="struct-img" class="bg-layer" src="food.png" alt="Estrutura Terra e Mar">
+    <!-- Individual prato photo fades in on top -->
+    <img id="prato-img"  class="bg-layer" src="" alt="">
+    <div id="zoom-overlay"></div>
+
+    <div id="hero-text">
+      <div class="eyebrow">⚓ A especialidade da casa</div>
+      <h1>Terra<br>e <em>Mar</em></h1>
+      <div class="slogan"><span>"Só saem daqui quando comerem tudo"</span></div>
+    </div>
+
+    <div id="prato-panel">
+      <span class="prato-icon" id="p-icon"></span>
+      <div class="prato-tag"  id="p-tag"></div>
+      <div class="prato-name" id="p-name"></div>
+      <div class="prato-divider"></div>
+      <p class="prato-desc"   id="p-desc"></p>
+    </div>
+
+    <div id="scroll-hint">Scroll</div>
+  </div>
+</div>
+
+<section id="video-section">
+  <div class="video-eyebrow">⚓ O Ritual</div>
+  <h2 class="video-title">A Entrada do Chef</h2>
+  <div class="video-wrap">
+    <video controls poster="hero.png">
+      <source src="video.mp4" type="video/mp4">
+    </video>
+  </div>
+</section>
+
+<section id="reserva">
+  <h2 class="reserva-title">Vem Provar</h2>
+  <p class="reserva-sub">Reserva a tua mesa e vive a experiência Terra e Mar</p>
+  <a href="tel:+351000000000" class="reserva-btn">Reservar Mesa</a>
+  <div class="footer-info">Casa dos Petiscos · Viseu, Portugal · © 2025 Casa dos Petiscos</div>
+</section>
+
+<script>
+// photo: filename to use when zoomed in (null = keep structure photo)
+const pratos = [
+  { icon:'🦐', tag:'Do Mar',   name:'Camarão',            desc:'Camarão fresco, cozinhado na perfeição — suculento, aromático e irresistível.', zoom:3.2, ox:62, oy:28, photo:'camarao.png' },
+  { icon:'🦪', tag:'Do Mar',   name:'Mexilhão & Ameijoa', desc:'Mariscos frescos abertos na hora, com todo o sabor do atlântico.',              zoom:3.2, ox:85, oy:28, photo:'ameijoa.png' },
+  { icon:'🥩', tag:'Da Terra', name:'Carne Grelhada',      desc:'Carnes escolhidas, grelhadas na brasa. O sabor da terra no seu melhor.',        zoom:3.2, ox:20, oy:28, photo:'carne.png'   },
+  { icon:'🍟', tag:'Da Terra', name:'Batata Frita',        desc:'Estaladiças por fora, macias por dentro — o acompanhamento indispensável.',     zoom:3.2, ox:18, oy:75, photo: null        },
+  { icon:'🥗', tag:'Da Terra', name:'Legumes',             desc:'Frescos e coloridos, os legumes trazem equilíbrio e leveza à estrutura.',       zoom:3.2, ox:65, oy:75, photo: null        },
+  { icon:'🍑', tag:'Da Terra', name:'Fruta',               desc:'O toque doce que finaliza a experiência. Fruta fresca da época.',               zoom:3.2, ox:85, oy:75, photo: null        },
+  { icon:'🫙', tag:'Extras',   name:'Acompanhamentos',     desc:'Molhos, pão artesanal e todos os extras que elevam cada prato.',                zoom:3.2, ox:42, oy:75, photo: null        },
+];
+
+const SECTIONS  = pratos.length;
+const structImg  = document.getElementById('struct-img');
+const pratoImg   = document.getElementById('prato-img');
+const overlay    = document.getElementById('zoom-overlay');
+const heroText   = document.getElementById('hero-text');
+const pratoPanel = document.getElementById('prato-panel');
+const scrollHint = document.getElementById('scroll-hint');
+const dots       = document.querySelectorAll('.dot');
+const pIcon = document.getElementById('p-icon');
+const pTag  = document.getElementById('p-tag');
+const pName = document.getElementById('p-name');
+const pDesc = document.getElementById('p-desc');
+
+let lastPratoIndex = null;
+
+function lerp(a,b,t){ return a+(b-a)*t; }
+function clamp(v,mn,mx){ return Math.min(Math.max(v,mn),mx); }
+function easeInOut(t){ return t<0.5?2*t*t:-1+(4-2*t)*t; }
+
+function showPrato(i){
+  if(lastPratoIndex === i) return;
+  lastPratoIndex = i;
+  const p = pratos[i];
+  pIcon.textContent = p.icon;
+  pTag.textContent  = p.tag;
+  pName.textContent = p.name;
+  pDesc.textContent = p.desc;
+  // swap individual photo
+  if(p.photo){
+    pratoImg.src = p.photo;
+  }
+}
+
+function setPratoPhoto(visible){
+  pratoImg.style.opacity = visible && pratos[lastPratoIndex]?.photo ? '1' : '0';
+}
+
+function setDot(pratoIndex){
+  dots.forEach((d,i) => d.classList.toggle('active', i === pratoIndex+1));
+  if(pratoIndex === -1) dots[0].classList.add('active');
+}
+
+function applyTransform(scale, ox, oy){
+  structImg.style.transform       = `scale(${scale})`;
+  structImg.style.transformOrigin = `${ox}% ${oy}%`;
+  pratoImg.style.transform        = `scale(${scale})`;
+  pratoImg.style.transformOrigin  = `${ox}% ${oy}%`;
+}
+
+function onScroll(){
+  const story    = document.getElementById('scroll-story');
+  const total    = story.offsetHeight - window.innerHeight;
+  const scrolled = clamp(-story.getBoundingClientRect().top, 0, total);
+  const progress = scrolled / total;
+
+  const sectionF   = progress * (SECTIONS + 1);
+  const sectionI   = Math.floor(sectionF);
+  const sectionT   = sectionF - sectionI;
+  const pratoIndex = sectionI - 1;
+
+  let scale, ox, oy, overlayAlpha, heroAlpha, pratoAlpha, photoVisible=false;
+
+  if(sectionI === 0){
+    if(sectionT < 0.5){
+      scale=1; ox=50; oy=50; overlayAlpha=0;
+      heroAlpha = 1 - easeInOut(sectionT*2); pratoAlpha=0;
+    } else {
+      const t = easeInOut((sectionT-0.5)*2);
+      const p = pratos[0];
+      scale=lerp(1,p.zoom,t); ox=lerp(50,p.ox,t); oy=lerp(50,p.oy,t);
+      overlayAlpha=lerp(0,0.55,t); heroAlpha=0;
+      pratoAlpha = t>0.7 ? easeInOut((t-0.7)/0.3) : 0;
+      if(t>0.6){ showPrato(0); photoVisible=true; }
+    }
+  } else if(sectionI >= 1 && sectionI <= SECTIONS){
+    const cur  = pratos[pratoIndex];
+    const prev = pratos[pratoIndex-1] || {zoom:1,ox:50,oy:50};
+    heroAlpha=0;
+    if(sectionT < 0.3){
+      const t = easeInOut(sectionT/0.3);
+      scale=lerp(prev.zoom,1,t); ox=lerp(prev.ox,50,t); oy=lerp(prev.oy,50,t);
+      overlayAlpha=lerp(0.55,0,t); pratoAlpha=lerp(1,0,t);
+      photoVisible = t < 0.5;
+    } else if(sectionT < 0.5){
+      scale=1; ox=50; oy=50; overlayAlpha=0; pratoAlpha=0; photoVisible=false;
+    } else {
+      const t = easeInOut((sectionT-0.5)/0.5);
+      scale=lerp(1,cur.zoom,t); ox=lerp(50,cur.ox,t); oy=lerp(50,cur.oy,t);
+      overlayAlpha=lerp(0,0.55,t);
+      pratoAlpha = t>0.7 ? easeInOut((t-0.7)/0.3) : 0;
+      if(t>0.6){ showPrato(pratoIndex); photoVisible=true; }
+    }
+  } else {
+    const last = pratos[SECTIONS-1];
+    scale=last.zoom; ox=last.ox; oy=last.oy;
+    overlayAlpha=0.55; heroAlpha=0; pratoAlpha=1; photoVisible=true;
+    showPrato(SECTIONS-1);
+  }
+
+  applyTransform(scale, ox, oy);
+  overlay.style.background    = `rgba(0,0,0,${overlayAlpha})`;
+  heroText.style.opacity      = heroAlpha;
+  pratoPanel.style.opacity    = pratoAlpha;
+  scrollHint.style.opacity    = progress < 0.03 ? 0.6 : 0;
+  setPratoPhoto(photoVisible);
+  setDot(pratoIndex);
+}
+
+window.addEventListener('scroll', onScroll, {passive:true});
+onScroll();
+
+dots.forEach((dot,i) => {
+  dot.addEventListener('click', () => {
+    const story = document.getElementById('scroll-story');
+    const total = story.offsetHeight - window.innerHeight;
+    window.scrollTo({top: story.offsetTop + (i/(SECTIONS+1))*total, behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
