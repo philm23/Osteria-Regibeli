@@ -182,6 +182,45 @@ body {
   background-size: cover;
   background-position: center;
 }
+/* ========================= */
+/* BRILHO DOURADO NOS CARDS */
+/* ========================= */
+
+.cards .card {
+  position: relative;
+  background: #1a1a1a;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Borda dourada animada */
+.cards .card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  padding: 2px;
+  background: linear-gradient(135deg, transparent, transparent, var(--primary), transparent, transparent);
+  -webkit-mask: 
+    linear-gradient(#000 0 0) content-box, 
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Glow dourado suave */
+.cards .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(212, 162, 76, 0.25);
+}
+
+.cards .card:hover::before {
+  opacity: 1;
+}
 
 /* Aqui colocas as tuas imagens reais */
 .img-camarao {
