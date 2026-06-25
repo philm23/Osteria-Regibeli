@@ -180,13 +180,13 @@ body {
   background-image: url("img/marisco.png");
 }
 .img-acompanhamentos {
-  background-image: url("img/acompanhamentos.png");
+  background: #ddd; /* placeholder temporário */
 }
 .img-saladas {
-  background-image: url("img/saladas.png");
+  background: #ddd;
 }
 .img-petiscos {
-  background-image: url("img/petiscos.png");
+  background: #ddd;
 }
 
 .card h3 {
