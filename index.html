@@ -65,13 +65,15 @@ window.addEventListener("scroll", () => {
 
   if (progress >= 1) {
     intro.classList.add("fade-out");
-    camaraoImg.classList.add("visible");
+
+    // limpar transform ANTES de aplicar fixed
+    camaraoImg.style.transform = "none";
+
+    // aplicar fixed e visible
     camaraoImg.classList.add("fixed");
-    camaraoImg.classList.add("centered");
+    camaraoImg.classList.add("visible");
   }
 });
-
-console.log("JS OK");
 </script>
 
 
