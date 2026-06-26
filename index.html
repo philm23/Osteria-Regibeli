@@ -9,59 +9,33 @@
 
 <body>
 
- <section class="parallax-section">
+<!-- SECÇÃO 1 – CAMARÃO -->
+<section class="parallax-section">
   <img src="img/camarao.png" class="parallax layer-1">
   <div class="caption">Camarão fresco da nossa costa.</div>
 </section>
 
+<!-- SECÇÃO 2 – AMEIJOA -->
 <section class="parallax-section">
   <img src="img/marisco.png" class="parallax layer-2">
   <div class="caption">Ameijoa apanhada no dia.</div>
 </section>
 
-
-  <footer class="footer">
-    <p>Casa dos Petiscos – Viseu</p>
-  </footer>
-
-  <!-- JAVASCRIPT FINAL -->
+<!-- SCRIPT DO PARALLAX -->
 <script>
-const img = document.querySelector(".rotate-on-scroll");
-const zone = document.querySelector(".scroll-zone");
-const intro = document.querySelector("#intro");
-
-const camarao = document.querySelector("#camarao .element");
-const ameijoa = document.querySelector("#ameijoa .element");
-
 window.addEventListener("scroll", () => {
-  const rect = zone.getBoundingClientRect();
-  const total = zone.offsetHeight - window.innerHeight;
-  const progress = Math.min(Math.max((0 - rect.top) / total, 0), 1);
+  const scrolled = window.scrollY;
 
-  /* FASE 1 — ROTAÇÃO DA IMAGEM INICIAL */
-  const rotation = progress * 360;
-  const scale = 1 + progress * 0.5;
-  img.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+  // Parallax médio: valores entre 0.2 e 0.5 são perfeitos
+  document.querySelectorAll(".layer-1").forEach(el => {
+    el.style.transform = `translate(-50%, ${scrolled * 0.25}px)`;
+  });
 
-  /* QUANDO TERMINA A ROTAÇÃO → DESVANECE O INTRO */
-  if (progress >= 0.55) {
-    intro.classList.add("fade-out");
-  }
-
-  /* FASE 2 — CAMARÃO ATIVO */
-  if (progress >= 0.60 && progress < 0.80) {
-    camarao.classList.add("active");
-    ameijoa.classList.remove("active");
-  }
-
-  /* FASE 3 — AMEIJOA ATIVA (CROSSFADE SUAVE) */
-  if (progress >= 0.80) {
-    camarao.classList.remove("active");
-    ameijoa.classList.add("active");
-  }
+  document.querySelectorAll(".layer-2").forEach(el => {
+    el.style.transform = `translate(-50%, ${scrolled * 0.45}px)`;
+  });
 });
 </script>
-
 
 </body>
 </html>
