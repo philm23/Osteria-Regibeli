@@ -23,7 +23,13 @@ body {
   text-align: center;
   background: white;
   z-index: 10;
+  pointer-events: none;
 }
+#intro.fade-out {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
 
 .title {
   font-size: 4rem;
