@@ -65,23 +65,16 @@ body {
 ------------------------------ */
 
 .element {
-  width: 45vw;
-  max-width: 450px;
-  height: auto;
-
   opacity: 0;
   transform: translateY(40px) scale(0.9);
-
-  animation: reveal 1s ease-out forwards;
-  animation-timeline: view();
+  transition: 1s ease-out;
 }
 
-@keyframes reveal {
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.element.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
+
 
 /* ------------------------------
    LEGENDAS DOS ELEMENTOS
