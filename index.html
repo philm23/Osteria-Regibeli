@@ -51,7 +51,7 @@
 const img = document.querySelector(".rotate-on-scroll");
 const zone = document.querySelector(".scroll-zone");
 const camarao = document.querySelector("#camarao");
-const intro = document.querySelector("#intro");
+const intro = document.querySelector("#intro");  // <-- ESTA LINHA FALTAVA
 
 window.addEventListener("scroll", () => {
   const rect = zone.getBoundingClientRect();
@@ -68,14 +68,11 @@ window.addEventListener("scroll", () => {
 
   // QUANDO TERMINA A ROTAÇÃO → FADE OUT DO INTRO + MOSTRA O CAMARÃO
   if (progress >= 1) {
-    intro.classList.add("fade-out");   // <-- ESTA LINHA É A CHAVE
+    intro.classList.add("fade-out");
     camarao.classList.add("visible");
   }
 });
 </script>
-
-
-
 
 
 </body>
