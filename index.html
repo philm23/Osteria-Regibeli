@@ -47,7 +47,7 @@
   </footer>
 
   <!-- JAVASCRIPT FINAL -->
-  <script>
+<script>
 const img = document.querySelector(".rotate-on-scroll");
 const zone = document.querySelector(".scroll-zone");
 const intro = document.querySelector("#intro");
@@ -65,12 +65,15 @@ window.addEventListener("scroll", () => {
 
   if (progress >= 1) {
     intro.classList.add("fade-out");
-    camaraoImg.classList.add("visible", "fixed");
+    camaraoImg.classList.add("visible");
+    camaraoImg.classList.add("fixed");
+    camaraoImg.classList.add("centered");
   }
 });
 
 console.log("JS OK");
 </script>
+
 
 </body>
 </html>
