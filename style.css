@@ -80,8 +80,9 @@ body {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: none; /* limpa transform anterior */
+  transform: translate(-50%, -50%) scale(1) !important;
   z-index: 20;
+  transition: opacity 0.6s ease; /* opcional */
 }
 .element.centered {
   transform: translate(-50%, -50%) scale(1);
