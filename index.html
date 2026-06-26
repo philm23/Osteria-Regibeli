@@ -68,11 +68,12 @@ window.addEventListener("scroll", () => {
 
   // QUANDO TERMINA A ROTAÇÃO → FADE OUT DO INTRO + MOSTRA O CAMARÃO
   if (progress >= 1) {
-    intro.classList.add("fade-out");
+    intro.classList.add("fade-out");   // <-- ESTA LINHA É A CHAVE
     camarao.classList.add("visible");
   }
 });
 </script>
+
 
 
 
