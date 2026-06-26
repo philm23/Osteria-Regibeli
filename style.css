@@ -1,439 +1,107 @@
-:root {
-  --bg-dark: #1b1b1b;
-  --bg-light: #f5f3ef;
-  --primary: #d4a24c; /* dourado premium */
-  --secondary: #cfa15a; /* dourado suave */
-  --text-dark: #222;
-  --text-light: #fff;
-  --radius: 10px;
-}
+/* ------------------------------
+   BASE GLOBAL
+------------------------------ */
 
-*,
-*::before,
-*::after {
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: var(--text-light);
-  background: #0d0d0d;
+  background: #ffffff;
+  color: #111111;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
 }
 
-/* Hero */
+/* ------------------------------
+   SECÇÕES TIPO "CAPÍTULO"
+------------------------------ */
 
-/* ========================= */
-/* HERO VISUAL FORTE ESCURO */
-/* ========================= */
-
-.hero {
-  position: relative;
-  min-height: 100vh;
-  background: url("img/banner-terra-mar.png") center/cover no-repeat;
+.chapter {
+  height: 100vh;
+  width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   text-align: center;
-  padding: 0 2rem;
+  padding: 40px;
 }
 
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.75); /* overlay escuro */
-  backdrop-filter: blur(2px);
-}
+/* ------------------------------
+   TÍTULO INICIAL
+------------------------------ */
 
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-  color: var(--text-light);
-}
-
-.hero-title {
-  font-size: clamp(3rem, 6vw, 5rem);
-  font-weight: 800;
-  margin-bottom: 1rem;
-  color: var(--text-light);
-  letter-spacing: -1px;
-}
-
-.hero-slogan {
-  font-size: 1.4rem;
-  color: var(--primary);
-  font-weight: 600;
-  margin-bottom: 2.5rem;
-  opacity: 0.9;
-}
-
-.hero-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1.2rem;
-}
-
-/* Botões */
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.8rem 1.6rem;
-  border-radius: 999px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: 0.2s ease;
-}
-
-.btn.primary {
-  background: var(--primary);
-  color: #000;
+.title {
+  font-size: 4rem;
   font-weight: 700;
-  padding: 1rem 2rem;
-  border-radius: 50px;
+  letter-spacing: 0.15rem;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
 }
 
-.btn.secondary {
-  background: transparent;
-  border: 2px solid var(--primary);
-  color: var(--primary);
-  padding: 1rem 2rem;
-  border-radius: 50px;
+/* ------------------------------
+   IMAGEM INICIAL COM ROTAÇÃO
+------------------------------ */
+
+.rotate-on-scroll {
+  width: 60vw;
+  max-width: 600px;
+  height: auto;
+
+  animation: spin 1s linear paused;
+  animation-timeline: scroll();
 }
 
-.btn.secondary:hover {
-  background: rgba(212, 162, 76, 0.15);
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
+/* ------------------------------
+   ELEMENTOS (CAMARÃO, AMEIJOA…)
+------------------------------ */
 
-/* Secções gerais */
+.element {
+  width: 45vw;
+  max-width: 450px;
+  height: auto;
 
-.section {
-  padding: 5rem 8vw;
-  background: #0d0d0d; /* fundo escuro */
-  color: var(--text-light);
-}
-
-.section.light {
-  background: #111; /* cinza escuro */
-}
-
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.section h2 {
-  color: var(--primary);
-}
-
-.section p {
-  max-width: 42rem;
-}
-
-/* Grid */
-
-.grid-4 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.8rem;
-  margin-top: 2rem;
-}
-
-/* Features */
-
-.feature {
-  background: #1a1a1a;
-  border-radius: var(--radius);
-  padding: 1.6rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-  text-align: center;
-}
-
-.feature p {
-  color: #ccc;
-}
-
-
-/* Cards de pratos */
-
-.cards .card {
-  background: #1a1a1a;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-
-.card-image {
-  height: 180px;
-  background-size: cover;
-  background-position: center;
-}
-/* ========================= */
-/* BRILHO DOURADO NOS CARDS */
-/* ========================= */
-
-.cards .card {
-  position: relative;
-  background: #1a1a1a;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Borda dourada animada */
-.cards .card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius);
-  padding: 2px;
-  background: linear-gradient(135deg, transparent, transparent, var(--primary), transparent, transparent);
-  -webkit-mask: 
-    linear-gradient(#000 0 0) content-box, 
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transform: translateY(40px) scale(0.9);
+
+  animation: reveal 1s ease-out forwards;
+  animation-timeline: view();
 }
 
-/* Glow dourado suave */
-.card:hover h3 {
-  color: #e8c57a; /* dourado mais claro no hover */
-  transition: color 0.3s ease;
+@keyframes reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
+/* ------------------------------
+   LEGENDAS DOS ELEMENTOS
+------------------------------ */
 
-.cards .card:hover::before {
-  opacity: 1;
+.caption {
+  margin-top: 1.5rem;
+  font-size: 1.3rem;
+  font-weight: 300;
+  max-width: 600px;
+  line-height: 1.5;
 }
 
-/* Aqui colocas as tuas imagens reais */
-.img-camarao {
-  background-image: url("img/camarao.png");
-}
-.img-carne {
-  background-image: url("img/carne.png");
-}
-.img-marisco {
-  background-image: url("img/marisco.png");
-}
-.img-acompanhamentos {
-  background: #ddd; /* placeholder temporário */
-}
-.img-saladas {
-  background: #ddd;
-}
-.img-petiscos {
-  background: #ddd;
-}
-
-.card h3 {
-  margin: 1rem 1.2rem 0.4rem;
-}
-
-.card p {
-  margin: 0 1.2rem 1.2rem;
-}
-
-/* Passos */
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
-}
-
-.step {
-  background: #1a1a1a;
-  border-radius: var(--radius);
-  padding: 1.6rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-}
-
-.step-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--primary);
-  color: var(--text-light);
-  font-weight: 700;
-  margin-bottom: 0.6rem;
-}
-
-/* Galeria */
-
-.gallery {
-  margin-top: 2rem;
-}
-
-.gallery-item {
-  background: #222;
-  border: 2px solid #333;
-  border-radius: var(--radius);
-  color: #aaa;
-}
-
-.placeholder {
-  background: repeating-linear-gradient(
-    45deg,
-    #ddd,
-    #ddd 10px,
-    #eee 10px,
-    #eee 20px
-  );
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #777;
-  font-size: 0.9rem;
-}
-
-/* Formulário de reservas */
-
-.reservation-form input {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  color: #fff;
-}
-
-.reservation-form input::placeholder {
-  color: #777;
-}
-
-
-.small-note {
-  font-size: 0.8rem;
-  color: #666;
-  margin-top: 0.8rem;
-}
-
-/* Footer */
+/* ------------------------------
+   FOOTER
+------------------------------ */
 
 .footer {
-  background: #111;
-  color: #aaa;
-  padding: 1.5rem 8vw;
-  font-size: 0.85rem;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  opacity: 0.6;
 }
-
-.footer-content {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-.footer span {
-  color: #ddd;
-}
-
-/* Responsivo */
-
-@media (max-width: 800px) {
-  .hero {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-image {
-    min-height: 220px;
-  }
-
-  .hero-content {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-  }
-}
-/* ========================= */
-/* ANIMAÇÕES GERAIS DO SITE */
-/* ========================= */
-
-/* Fade-in suave */
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 1s ease forwards;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-/* Slide-up nos cards */
-.slide-up {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: slideUp 0.8s ease forwards;
-}
-
-@keyframes slideUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Zoom suave nas imagens dos cards */
-.card-image {
-  transition: transform 0.4s ease;
-}
-
-.card:hover .card-image {
-  transform: scale(1.08);
-}
-
-/* Botões com efeito de clique */
-.btn {
-  transition: transform 0.15s ease;
-}
-
-.btn:active {
-  transform: scale(0.94);
-}
-
-/* Hero com zoom suave (efeito respirar) */
-.hero-image {
-  animation: heroZoom 6s ease-in-out infinite alternate;
-}
-
-@keyframes heroZoom {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.06);
-  }
-}
-/* ========================= */
-/* ANIMAÇÕES AO FAZER SCROLL */
-/* ========================= */
-
-.scroll-animate {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease;
-}
-
-.scroll-animate.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
