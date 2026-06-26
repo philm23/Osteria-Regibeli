@@ -67,7 +67,10 @@ window.addEventListener("scroll", () => {
 
   // QUANDO TERMINA A ROTAÇÃO → MOSTRA O CAMARÃO
   if (progress >= 1) {
-    camarao.classList.add("visible");
+  img.style.opacity = "0";        // desaparece a imagem inicial
+  camarao.classList.add("visible"); // aparece o camarão
+}
+
   }
 });
 </script>
