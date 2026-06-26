@@ -73,6 +73,40 @@ window.addEventListener("scroll", () => {
     camaraoImg.classList.add("fixed");
     camaraoImg.classList.add("visible");
   }
+const img = document.querySelector(".rotate-on-scroll");
+const zone = document.querySelector(".scroll-zone");
+const intro = document.querySelector("#intro");
+
+const camaraoImg = document.querySelector("#camarao .element");
+const ameijoaImg = document.querySelector("#ameijoa .element");
+
+window.addEventListener("scroll", () => {
+  const rect = zone.getBoundingClientRect();
+  const total = zone.offsetHeight - window.innerHeight;
+  const progress = Math.min(Math.max((0 - rect.top) / total, 0), 1);
+
+  // Fase 1 — Rotação da imagem inicial
+  const rotation = progress * 360;
+  const scale = 1 + progress * 0.5;
+  img.style.transform = `rotate(${rotation}deg) scale(${scale})`;
+
+  // Quando termina a rotação → aparece o camarão
+  if (progress >= 1) {
+    intro.classList.add("fade-out");
+
+    camaraoImg.style.transform = "none";
+    camaraoImg.classList.add("fixed");
+    camaraoImg.classList.add("visible");
+  }
+
+  // Fase 2 — Quando o utilizador continua a fazer scroll → aparece a ameijoa
+  if (progress >= 1.2) {
+    camaraoImg.style.opacity = "0"; // camarão desaparece
+
+    ameijoaImg.style.transform = "none";
+    ameijoaImg.classList.add("fixed");
+    ameijoaImg.classList.add("visible");
+  }
 });
 </script>
 
