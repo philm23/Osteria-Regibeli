@@ -80,8 +80,11 @@ body {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1);
+  transform: none; /* limpa transform anterior */
   z-index: 20;
+}
+.element.centered {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .caption {
