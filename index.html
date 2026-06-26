@@ -69,7 +69,7 @@
       // QUANDO TERMINA A ROTAÇÃO → FADE OUT DO INTRO + MOSTRA O CAMARÃO
       if (progress >= 1) {
         intro.classList.add("fade-out");
-        camarao.classList.add("visible");
+        camarao.querySelector(".element").classList.add("visible");
       }
     });
     console.log("JS OK");
