@@ -8,7 +8,6 @@
 </head>
 
 <body>
-
 <!-- SECÇÃO 1 – CAMARÃO -->
 <section class="parallax-section">
   <img src="img/camarao.png" class="parallax layer-1">
@@ -26,7 +25,7 @@
 window.addEventListener("scroll", () => {
   const scrolled = window.scrollY;
 
-  // Parallax médio: valores entre 0.2 e 0.5 são perfeitos
+  // Parallax médio
   document.querySelectorAll(".layer-1").forEach(el => {
     el.style.transform = `translate(-50%, ${scrolled * 0.25}px)`;
   });
