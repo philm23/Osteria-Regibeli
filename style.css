@@ -36,8 +36,10 @@ body {
   width: 60vw;
   max-width: 600px;
   height: auto;
-  transition: transform 0.1s linear;
+  transform-origin: center center;
+  transition: transform 0.05s linear;
 }
+
 
 /* ÁREA DE SCROLL ARTIFICIAL */
 .scroll-zone {
