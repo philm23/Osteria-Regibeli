@@ -48,33 +48,30 @@
 
   <!-- JAVASCRIPT FINAL -->
   <script>
-    const img = document.querySelector(".rotate-on-scroll");
-    const zone = document.querySelector(".scroll-zone");
-    const camarao = document.querySelector("#camarao");
+const img = document.querySelector(".rotate-on-scroll");
+const zone = document.querySelector(".scroll-zone");
+const camarao = document.querySelector("#camarao");
 
-    window.addEventListener("scroll", () => {
-      const rect = zone.getBoundingClientRect();
-      const total = zone.offsetHeight - window.innerHeight;
-      const progress = Math.min(Math.max((0 - rect.top) / total, 0), 1);
+window.addEventListener("scroll", () => {
+  const rect = zone.getBoundingClientRect();
+  const total = zone.offsetHeight - window.innerHeight;
+  const progress = Math.min(Math.max((0 - rect.top) / total, 0), 1);
 
-      const rotation = progress * 360;
-      img.style.transform = `rotate(${rotation}deg)`;
+  // ROTACAO
+  const rotation = progress * 360;
 
-      if (progress >= 1) {
-        camarao.classList.add("visible");
-      }
-    });
+  // ZOOM (1 = tamanho normal, 1.5 = 150%)
+  const scale = 1 + progress * 0.5;
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
-      });
-    }, { threshold: 0.3 });
+  img.style.transform = `rotate(${rotation}deg) scale(${scale})`;
 
-    document.querySelectorAll(".element").forEach(el => observer.observe(el));
-  </script>
+  // QUANDO TERMINA A ROTAÇÃO → MOSTRA O CAMARÃO
+  if (progress >= 1) {
+    camarao.classList.add("visible");
+  }
+});
+</script>
+
 
 </body>
 </html>
